@@ -32,8 +32,8 @@ if (!!document.querySelector(".DailySchedule-Nav")) {
                             const [away, home] = Array.prototype.slice.call(game.querySelectorAll(".GameWidget-ScoreLine"));
                             const awayTexts = away.innerText.split(/\s/);
                             const homeTexts = home.innerText.split(/\s/);
-                            const betOnAway = awayTexts.length == 8;
-                            const betOnHome = homeTexts.length == 8;
+                            const betOnAway = away.querySelector(".GameWidget-ScoreBet") !== null;
+                            const betOnHome = home.querySelector(".GameWidget-ScoreBet") !== null;
                             const awayScore = parseFloat(awayTexts[awayTexts.length-2]);
                             const homeScore = parseFloat(homeTexts[homeTexts.length-2]);
                             if ((betOnAway || betOnHome) && !(awayScore === homeScore)) {
