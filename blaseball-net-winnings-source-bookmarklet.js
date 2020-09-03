@@ -5,6 +5,7 @@ if (!!document.querySelector(".DailySchedule-Nav")) {
         if (!!netWinningsElement) {
             if (document.querySelector(".DailySchedule-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
                 netWinningsElement.style.display = "none";
+                document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0];
             } else {
                 const netWinnings = (() => {
                     const blurbs = Array.prototype.slice.call(document.querySelectorAll(".GameWidget-Outcome-Blurb")).filter(e => e.innerText.indexOf("You bet") === 0);
@@ -23,6 +24,7 @@ if (!!document.querySelector(".DailySchedule-Nav")) {
                         }).reduce((a, b) => a + b, 0);
                     }
                 })();
+                let expectedIncome = 0;
                 const expectedWinnings = (() => {
                     const finalWidgets = Array.prototype.slice.call(document.querySelectorAll(".GameWidget-Header-Wrapper")).filter(e => e.innerText.indexOf("FINAL") !== 0);
                     if (!finalWidgets.length) {
@@ -41,6 +43,7 @@ if (!!document.querySelector(".DailySchedule-Nav")) {
                                 const betAmt = parseInt(betText[betText.length - 4]);
                                 const winAmt = parseInt(betText[betText.length - 3]);
                                 const areYouWinning = (betOnAway && awayScore > homeScore) || (betOnHome && homeScore > awayScore);
+                                expectedIncome += (areYouWinning ? winAmt : 0);
                                 return areYouWinning ? (winAmt - betAmt) : -betAmt;
                             } else {
                                 return 0;
@@ -64,6 +67,10 @@ if (!!document.querySelector(".DailySchedule-Nav")) {
                     document.querySelector(".totalWinnings").innerText = "Total Winnings: N/A";
                 }
                 netWinningsElement.style.display = "flex";
+                
+                if (expectedIncome) {
+                    document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0] + ` + ${expectedIncome}?`;
+                }
             }
         }
     }, 1000);

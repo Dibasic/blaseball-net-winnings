@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Blaseball Winnings 2.0.6
+// @name        Blaseball Winnings 2.0.7
 // @description Add fields to Watch Live section of Blaseball to show net winnings
 // @match       https://blaseball.com/*
 // @match       https://www.blaseball.com/*
@@ -16,6 +16,7 @@ window.setTimeout(() => {
             if (!!netWinningsElement) {
                 if (document.querySelector(".DailySchedule-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
                     netWinningsElement.style.display = "none";
+                    document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0];
                 } else {
                     const netWinnings = (() => {
                         const blurbs = Array.prototype.slice.call(document.querySelectorAll(".GameWidget-Outcome-Blurb")).filter(e => e.innerText.indexOf("You bet") === 0);
@@ -34,6 +35,7 @@ window.setTimeout(() => {
                             }).reduce((a, b) => a + b, 0);
                         }
                     })();
+                    let expectedIncome = 0;
                     const expectedWinnings = (() => {
                         const finalWidgets = Array.prototype.slice.call(document.querySelectorAll(".GameWidget-Header-Wrapper")).filter(e => e.innerText.indexOf("FINAL") !== 0);
                         if (!finalWidgets.length) {
@@ -52,6 +54,7 @@ window.setTimeout(() => {
                                     const betAmt = parseInt(betText[betText.length - 4]);
                                     const winAmt = parseInt(betText[betText.length - 3]);
                                     const areYouWinning = (betOnAway && awayScore > homeScore) || (betOnHome && homeScore > awayScore);
+                                    expectedIncome += (areYouWinning ? winAmt : 0);
                                     return areYouWinning ? (winAmt - betAmt) : -betAmt;
                                 } else {
                                     return 0;
@@ -75,6 +78,10 @@ window.setTimeout(() => {
                         document.querySelector(".totalWinnings").innerText = "Total Winnings: N/A";
                     }
                     netWinningsElement.style.display = "flex";
+
+                    if (expectedIncome) {
+                        document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0] + ` + ${expectedIncome}?`;
+                    }
                 }
             }
         }, 1000);
