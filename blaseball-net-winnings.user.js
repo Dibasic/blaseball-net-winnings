@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Blaseball Winnings 2.0.7
+// @name        Blaseball Winnings 2.0.8
 // @description Add fields to Watch Live section of Blaseball to show net winnings
 // @match       https://blaseball.com/*
 // @match       https://www.blaseball.com/*
@@ -9,12 +9,12 @@
 // ==/UserScript==
 
 window.setTimeout(() => {
-    if (!!document.querySelector(".DailySchedule-Nav")) {
-        document.querySelector(".DailySchedule-Nav").insertAdjacentHTML("afterend", '<div class="netWinnings" style="display: flex; justify-content: center;"><button class="Navigation-Button completedWinnings" style="border: 1px solid white;">Completed Winnings: -</button><button class="Navigation-Button expectedWinnings" style="border: 1px solid white;">Expected Winnings: -</button><button class="Navigation-Button totalWinnings" style="border: 1px solid white;">Total Winnings: -</button></div>');
+    if (!!document.querySelector(".LeagueNavigation-Nav")) {
+        document.querySelector(".LeagueNavigation-Nav").insertAdjacentHTML("afterend", '<div class="netWinnings" style="display: flex; justify-content: center;"><button class="Navigation-Button completedWinnings" style="border: 1px solid white;">Completed Winnings: -</button><button class="Navigation-Button expectedWinnings" style="border: 1px solid white;">Expected Winnings: -</button><button class="Navigation-Button totalWinnings" style="border: 1px solid white;">Total Winnings: -</button></div>');
         let winInterval = window.setInterval(() => {
             const netWinningsElement = document.querySelector(".netWinnings");
             if (!!netWinningsElement) {
-                if (document.querySelector(".DailySchedule-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
+                if (document.querySelector(".LeagueNavigation-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
                     netWinningsElement.style.display = "none";
                     document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0];
                 } else {
