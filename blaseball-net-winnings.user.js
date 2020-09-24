@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Blaseball Winnings 2.0.8
+// @name        Blaseball Winnings 2.0.9
 // @description Add fields to Watch Live section of Blaseball to show net winnings
 // @match       https://blaseball.com/*
 // @match       https://www.blaseball.com/*
@@ -78,9 +78,9 @@ window.setTimeout(() => {
                         document.querySelector(".totalWinnings").innerText = "Total Winnings: N/A";
                     }
                     netWinningsElement.style.display = "flex";
-
+                    
                     if (expectedIncome) {
-                        document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0] + ` + ${expectedIncome}?`;
+                        Array.prototype.slice.call(document.querySelectorAll(".Navigation-User-Top > .Navigation-CurrencyButton:first-child")).forEach(e => e.childNodes[2].nodeValue = e.childNodes[2].nodeValue.split(" ")[0] + ` + ${expectedIncome}?`);
                     }
                 }
             }
