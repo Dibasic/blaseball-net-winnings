@@ -1,9 +1,9 @@
-if (!!document.querySelector(".LeagueNavigation-Nav")) {
-    document.querySelector(".LeagueNavigation-Nav").insertAdjacentHTML("afterend", '<div class="netWinnings" style="display: flex; justify-content: center;"><button class="Navigation-Button completedWinnings" style="border: 1px solid white;">Completed Winnings: -</button><button class="Navigation-Button expectedWinnings" style="border: 1px solid white;">Expected Winnings: -</button><button class="Navigation-Button totalWinnings" style="border: 1px solid white;">Total Winnings: -</button></div>');
+if (!!document.querySelector(".League-Nav")) {
+    document.querySelector(".League-Nav").insertAdjacentHTML("afterend", '<div class="netWinnings" style="display: flex; justify-content: center;"><button class="Navigation-Button completedWinnings" style="border: 1px solid white;">Completed Winnings: -</button><button class="Navigation-Button expectedWinnings" style="border: 1px solid white;">Expected Winnings: -</button><button class="Navigation-Button totalWinnings" style="border: 1px solid white;">Total Winnings: -</button></div>');
     let winInterval = window.setInterval(() => {
         const netWinningsElement = document.querySelector(".netWinnings");
         if (!!netWinningsElement) {
-            if (document.querySelector(".LeagueNavigation-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
+            if (document.querySelector(".League-Nav .Navigation-Button-Current").innerText !== "WATCH LIVE") {
                 netWinningsElement.style.display = "none";
                 document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue = document.querySelector(".Navigation-CurrencyButton").childNodes[2].nodeValue.split(" ")[0];
             } else {
@@ -26,7 +26,7 @@ if (!!document.querySelector(".LeagueNavigation-Nav")) {
                 })();
                 let expectedIncome = 0;
                 const expectedWinnings = (() => {
-                    const finalWidgets = Array.prototype.slice.call(document.querySelectorAll(".GameWidget-Header-Wrapper")).filter(e => e.innerText.indexOf("FINAL") !== 0);
+                    const finalWidgets = Array.prototype.slice.call(document.querySelectorAll(".Widget-Header-Wrapper")).filter(e => e.innerText.indexOf("FINAL") !== 0);
                     if (!finalWidgets.length) {
                         return null;
                     } else {
@@ -67,7 +67,7 @@ if (!!document.querySelector(".LeagueNavigation-Nav")) {
                     document.querySelector(".totalWinnings").innerText = "Total Winnings: N/A";
                 }
                 netWinningsElement.style.display = "flex";
-                
+
                 if (expectedIncome) {
                     Array.prototype.slice.call(document.querySelectorAll(".Navigation-User-Top > .Navigation-CurrencyButton:first-child")).forEach(e => e.childNodes[2].nodeValue = e.childNodes[2].nodeValue.split(" ")[0] + ` + ${expectedIncome}?`);
                 }
